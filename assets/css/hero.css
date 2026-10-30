@@ -46,7 +46,8 @@ body::-webkit-scrollbar { display: none; width: 0; height: 0; }
 .hero__spline-stage {
   position: absolute;
   z-index: 1;
-  inset: var(--header-height, 106px) 0 0;
+  /* A cena ocupa todo o Hero, inclusive a area atras do header fixo. */
+  inset: 0;
   overflow: hidden;
   background: transparent;
 }
@@ -163,7 +164,6 @@ body.is-on-light-hero:not(.is-on-projects) .language__separator { color: #989DB3
   .hero { height: max(690px, 100svh); }
   /* Gradiente mais curto no celular, para não escurecer o CTA. */
   .hero::after { height: clamp(120px, 19svh, 175px); }
-  .hero__spline-stage { inset-block-start: var(--header-height, 89px); }
   .hero__copy { width: 100%; padding: calc(var(--header-height, 89px) + 24px) 23px 62px; gap: 13px; }
   .hero__eyebrow { font-size: 10px; letter-spacing: .13em; }
   .hero__title { max-width: 350px; font-size: clamp(27px, 7.5vw, 34px); line-height: 1.13; letter-spacing: -.016em; }
@@ -229,4 +229,36 @@ body.is-on-light-hero:not(.is-on-projects) .language__separator { color: #989DB3
 @media (max-width: 1024px), (pointer: coarse) {
   .hero__spline-drag-surface { display: block; cursor: grab; }
   .hero__spline-drag-surface.is-dragging { cursor: grabbing; }
+}
+
+/* HEADER SOBRE O HERO — completamente transparente, inclusive depois de
+   pequenos movimentos de scroll. As regras de vidro do footer.css usam
+   !important, entao este estado precisa vence-las sem afetar outros setores.
+   No menu mobile aberto, o fundo escuro original continua prevalecendo. */
+body:not(.menu-is-open) #site-header.site-header.is-on-light-hero {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* VORA / Header mobile sobre o Spline
+   No Safari iOS, a cena precisa ocupar o espaço ATRÁS do cabeçalho;
+   o fundo do menu aberto permanece opaco. */
+@media (max-width: 760px) {
+  .hero .hero__spline-stage {
+    inset: 0 !important;
+    inset-block-start: 0 !important;
+    top: 0 !important;
+    height: 100%;
+  }
+
+  body:not(.menu-is-open) #site-header.site-header.is-on-light-hero {
+    background: transparent !important;
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
 }
