@@ -1,0 +1,142 @@
+/* VORA — CASES. Editorial visual hierarchy, Recady throughout.
+   The pages use the same palette and footer as the institutional website. */
+/* Oculta a barra vertical visível nos cases, sem bloquear a rolagem
+   da página por mouse, toque, trackpad ou teclado. Este arquivo só é
+   carregado nas páginas de case; a página inicial não é afetada. */
+html { scrollbar-width: none; -ms-overflow-style: none; }
+html::-webkit-scrollbar,
+body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+.case-page { background:var(--white-blue);color:var(--black-blue);font-family:var(--font-display); overflow-x:hidden; }
+.case-page .hi-footer { margin-top:0; }
+.case-page :is(a,button):focus-visible { outline:2px solid var(--blue); outline-offset:5px; }
+/* Same fixed header, centered language selector and fullscreen mobile menu
+   as the index. Styles and interactions come from header.css/header.js. */
+.case-main {padding-top:var(--header-height);}
+.case-intro {padding:clamp(45px,6.7vw,110px) var(--space-edge) clamp(65px,9vw,155px);}
+.case-intro__top {display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.case-back,.case-index {color:var(--blue);font-size:clamp(11px,.9vw,14px);text-decoration:none;letter-spacing:.08em;}
+/* Back-to-work: typographic movement without layout jumps. */
+.case-back {display:inline-flex;align-items:center;gap:9px;white-space:nowrap;transition:translate 400ms cubic-bezier(.22,1,.36,1);}
+.case-back__label {letter-spacing:.075em;transition:letter-spacing 440ms cubic-bezier(.22,1,.36,1);}
+.case-back__arrow {display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;flex-shrink:0;transition:transform 400ms cubic-bezier(.22,1,.36,1);}
+.case-back__arrow svg {width:100%;height:100%;display:block;}
+@media (hover:hover) and (pointer:fine){
+ .case-back:hover {translate:2px 0;}
+ .case-back:hover .case-back__label {letter-spacing:.15em;}
+ .case-back:hover .case-back__arrow {transform:translate(-3px,-3px);}
+}
+.case-back:focus-visible .case-back__label {letter-spacing:.15em;}
+.case-back:focus-visible .case-back__arrow {transform:translate(-3px,-3px);}
+
+.case-intro__name {font-size:clamp(70px,12.8vw,224px);line-height:.86;letter-spacing:-.055em;font-weight:400;margin:clamp(52px,6.6vw,110px) 0 clamp(56px,8vw,128px); overflow-wrap:anywhere;}
+.case-intro__name .brand-dot {letter-spacing:-.08em;}
+.case-intro__grid,.case-story,.case-details {display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,1fr);gap:clamp(30px,6vw,110px);}
+.case-section-label {font-size:clamp(13px,1.06vw,17px);line-height:1.4;color:var(--black-blue);}
+.case-intro__body {max-width:660px;}
+.case-meta {margin:0 0 clamp(45px,5vw,80px);}
+.case-meta__row {display:flex;justify-content:space-between;gap:24px;padding:18px 0;border-bottom:1px solid rgba(14,15,40,.2);font-size:clamp(15px,1.18vw,20px);}
+.case-meta__row > :first-child {color:#5E6278;}
+.case-meta__row > :last-child{text-align:right;max-width:65%;}
+.case-intro__copy h2 {font-size:clamp(26px,2.4vw,38px);line-height:1.18;font-weight:400;letter-spacing:-.025em;max-width:550px;margin:0 0 34px;}
+.case-intro__copy p,.case-story__body p {font-size:clamp(21px,2.1vw,34px);line-height:1.42;font-weight:400;letter-spacing:-.012em;max-width:710px; margin:0;}
+.case-visuals {padding:0 var(--space-edge) clamp(80px,10vw,160px);}
+.case-visuals__heading {display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:clamp(13px,1.1vw,17px);padding-bottom:28px;}
+.case-visuals__heading span {font-size:clamp(12px,1vw,15px);color:#656B84;}
+.case-visuals__grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2.5vw,40px);}
+.case-visuals__grid--single {grid-template-columns:minmax(0,.52fr);}
+.case-visuals__item {margin:0;}
+.case-visuals__item img {width:100%;max-height:720px;height:auto;aspect-ratio:700/840;object-fit:cover;display:block;background:#101329;}
+.case-visuals__item figcaption {font-size:12px;line-height:1.35;color:#6D7189;padding-top:12px;}
+.case-story {padding:clamp(80px,11vw,180px) var(--space-edge); min-height:400px;border-top:1px solid rgba(14,15,40,.16);}
+.case-story__body {max-width:750px;}
+.case-story--accent {background:var(--black-blue);color:var(--white-blue);border-color:transparent;}
+.case-story--accent .case-section-label {color:var(--white-blue);}
+.case-details {padding:clamp(80px,10vw,160px) var(--space-edge) clamp(100px,11vw,180px);}
+.case-details__content {max-width:700px;}
+.case-details__content h2 {font-size:clamp(29px,3vw,49px);letter-spacing:-.035em;line-height:1.12;font-weight:400;margin:0 0 55px;}
+.case-feature {margin:0;padding:0;list-style:none;}
+.case-feature li {display:flex;gap:28px;align-items:baseline;border-top:1px solid rgba(14,15,40,.19);padding:22px 0;font-size:clamp(19px,1.65vw,26px);}
+.case-feature li:last-child {border-bottom:1px solid rgba(14,15,40,.19);}
+.case-feature__number {font-size:12px;color:var(--blue);min-width:32px;}
+.case-related {padding:45px var(--space-edge) clamp(110px,10vw,170px);overflow:hidden;}
+.case-related__head {display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:clamp(42px,6vw,100px);}
+.case-related__head h2 {margin:0;font-weight:400;font-size:clamp(15px,1.13vw,19px);}
+.case-related__head>span {font-size:12px;letter-spacing:.09em;color:#646981;}
+.case-related__rail {display:flex;gap:clamp(15px,2.2vw,34px);overflow-x:auto;overflow-y:hidden;padding-bottom:20px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#a0a5c6 transparent;cursor:grab;touch-action:pan-x;}
+.case-related__rail.is-dragging {cursor:grabbing;scroll-snap-type:none;user-select:none;}
+.case-related__card {display:block;flex:0 0 clamp(230px,34vw,520px);max-width:82vw;scroll-snap-align:start;text-decoration:none;color:var(--black-blue);}
+.case-related__preview {position:relative;display:block;overflow:hidden;background:#0E0F28;aspect-ratio:1/1.06;}
+.case-related__preview img {display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.case-related__card:hover img {transform:scale(1.035);}
+.case-related__preview-note {position:absolute;bottom:12px;left:12px;background:rgba(228,229,242,.94);color:var(--black-blue);padding:6px 8px;font-size:10px;letter-spacing:.04em;}
+.case-related__info {display:flex;justify-content:space-between;gap:12px;padding:20px 2px;font-size:clamp(23px,2.2vw,36px);}
+/* The entire related-project card is a real link: image, name and arrow. */
+.case-related__name {letter-spacing:0;transition:letter-spacing 450ms cubic-bezier(.22,1,.36,1);}
+.case-related__arrow {width:26px;height:26px;color:var(--blue);flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;transition:transform 380ms cubic-bezier(.22,1,.36,1);}
+.case-related__arrow svg {display:block;width:100%;height:100%;}
+@media (hover:hover) and (pointer:fine){
+ .case-related__card:hover .case-related__name {letter-spacing:.035em;}
+ .case-related__card:hover .case-related__arrow {transform:translate(4px,-4px);}
+}
+.case-related__card:focus-visible .case-related__name {letter-spacing:.035em;}
+.case-related__card:focus-visible .case-related__arrow {transform:translate(4px,-4px);}
+/* Progressive, varied scroll reveals for case-study editorial content. */
+.case-page.case-reveal-ready [data-case-reveal] {
+  transition:
+    opacity 850ms cubic-bezier(.22,1,.36,1),
+    translate 1050ms cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--case-reveal-delay,0ms);
+  will-change:opacity,translate;
+}
+.case-page.case-reveal-ready [data-case-reveal]:not(.is-visible) {opacity:0;}
+.case-page.case-reveal-ready [data-case-reveal="up"]:not(.is-visible) {translate:0 28px;}
+.case-page.case-reveal-ready [data-case-reveal="down"]:not(.is-visible) {translate:0 -24px;}
+.case-page.case-reveal-ready [data-case-reveal="left"]:not(.is-visible) {translate:-24px 0;}
+.case-page.case-reveal-ready [data-case-reveal="right"]:not(.is-visible) {translate:24px 0;}
+.case-page.case-reveal-ready [data-case-reveal].is-visible {opacity:1;translate:0 0;will-change:auto;}
+
+.case-page .hi-footer__top {background:transparent;}
+@media(max-width:1000px){
+ .case-intro__grid,.case-story,.case-details {grid-template-columns:minmax(0, .65fr) minmax(0,1fr);}
+}
+@media(max-width:760px){
+ .case-intro {padding-top:40px;padding-bottom:75px;}
+ .case-intro__name {font-size:clamp(58px,14vw,105px);line-height:.91;margin:78px 0 80px;}
+ .case-intro__grid,.case-story,.case-details {grid-template-columns:1fr;gap:28px;}
+ .case-intro__copy h2 {font-size:28px;}
+ .case-intro__copy p,.case-story__body p {font-size:clamp(22px,5.8vw,30px);}
+ .case-meta {margin:4px 0 50px;}
+ .case-visuals {padding-bottom:75px;}
+ .case-visuals__heading {align-items:start;flex-direction:column;gap:9px;}
+ .case-visuals__grid {grid-template-columns:1fr;gap:28px;}
+ .case-visuals__grid--single {grid-template-columns:1fr;}
+ .case-visuals__item img {max-height:650px;}
+ .case-story {padding:80px var(--space-edge);min-height:0;}
+ .case-details{padding:80px var(--space-edge) 100px;}
+ .case-related {padding-bottom:100px;}
+ .case-related__card {flex-basis:min(75vw,380px);}
+ .case-related__head>span {font-size:10px;}
+}
+@media (prefers-reduced-motion:reduce){
+ .case-related__rail {scroll-behavior:auto;}
+ .case-related__card img,.case-related__name,.case-related__arrow,.case-back,.case-back__label,.case-back__arrow {transition:none!important;transform:none!important;translate:none!important;}
+ .case-page.case-reveal-ready [data-case-reveal] {opacity:1!important;translate:none!important;transition:none!important;will-change:auto!important;}
+}
+
+/* ETAPA 35 — Cases também recebem um layout intermediário para
+   notebooks menores, antes do breakpoint de celular. */
+@media (min-width: 761px) and (max-width: 1050px) {
+  .case-intro__grid, .case-story, .case-details {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 38px;
+  }
+  .case-intro__name { font-size: clamp(68px, 10.5vw, 120px); }
+  .case-intro__body, .case-story__body, .case-details__content {
+    width: 100%; max-width: 760px;
+  }
+  .case-meta__row > :last-child { overflow-wrap: anywhere; }
+}
+
+/* Cards de "Outros projetos" adotam o mesmo enquadramento quadrado
+   das capas da galeria da página inicial. */
+.case-related__preview { aspect-ratio: 1 / 1; }

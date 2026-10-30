@@ -1,0 +1,124 @@
+/* ====================================
+   VORA / PRELOADER
+   Inspirado na linguagem editorial e no
+   uso de espaço negativo das referências.
+   ==================================== */
+
+.loader {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: var(--white-blue);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 700ms cubic-bezier(.22, 1, .36, 1),
+              visibility 700ms;
+}
+
+.loader.is-finished {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader__stage {
+  position: absolute;
+  top: 50%;
+  right: var(--space-edge);
+  left: var(--space-edge);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 20px;
+  transform: translateY(-50%);
+}
+
+.loader__stage-item {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(17px, 1.6vw, 27px);
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  transition: color 350ms ease;
+}
+
+.loader__stage-item:nth-child(2) { text-align: center; }
+.loader__stage-item--end { text-align: right; }
+/* A terceira mensagem e maior que a anterior: evite colisoes nas colunas. */
+.loader__stage-item--end {
+  font-size: clamp(12px, 1.14vw, 19px);
+  letter-spacing: 0;
+}
+
+.loader__stage-item.is-active { color: var(--black-blue); }
+
+.loader__counter {
+  position: absolute;
+  /* Referência: canto inferior direito, sem faixa de rodapé. */
+  right: clamp(16px, 2vw, 32px);
+  bottom: clamp(10px, 2vh, 22px);
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  font-family: var(--font-ui);
+  font-variant-numeric: tabular-nums;
+  color: var(--black-blue);
+  line-height: 0.83;
+  letter-spacing: -0.095em;
+  user-select: none;
+}
+
+.loader__number {
+  display: inline-block;
+  min-width: 1ch;
+  font-size: clamp(96px, 11.5vw, 180px);
+  font-weight: 400;
+  font-feature-settings: 'tnum';
+}
+
+.loader__symbol {
+  margin-left: 8px;
+  font-size: clamp(24px, 2.9vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+}
+
+@media (max-width: 900px) {
+  .loader__stage-item { font-size: clamp(15px, 2.3vw, 20px); }
+  .loader__counter { bottom: 14px; }
+}
+
+@media (max-width: 800px) {
+  .loader__stage {
+    top: 46%;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .loader__stage-item,
+  .loader__stage-item:nth-child(2),
+  .loader__stage-item--end {
+    text-align: left;
+    font-size: 20px;
+    white-space: normal;
+  }
+
+  .loader__counter {
+    bottom: 16px;
+    right: 18px;
+  }
+
+  .loader__number { font-size: clamp(96px, 22vw, 145px); }
+  .loader__symbol { margin-left: 6px; font-size: clamp(24px, 6vw, 34px); }
+}
+
+@media (max-height: 540px) and (min-width: 801px) {
+  .loader__stage { top: 36%; }
+  .loader__counter { bottom: 10px; }
+  .loader__number { font-size: min(20vh, 132px); }
+}

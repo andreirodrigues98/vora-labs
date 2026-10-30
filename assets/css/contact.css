@@ -1,0 +1,198 @@
+/* VORA — ETAPA 06 / CONTATO
+   Adaptação da composição do Commit Labs, com a identidade VORA.
+   Não altera estilos globais, Hero, Projetos, Sobre ou FAQ.
+*/
+.project-start {
+  position: relative;
+  isolation: isolate;
+  scroll-margin-top: var(--header-height, 106px);
+  padding: clamp(120px, 15vh, 190px) 0 clamp(105px, 14vh, 180px);
+  background: var(--white-blue);
+  color: var(--black-blue);
+  color-scheme: light;
+}
+.project-start__inner {
+  width: min(100%, 1710px);
+  margin-inline: auto;
+  padding-inline: var(--space-edge);
+  display: grid;
+  grid-template-columns: minmax(0, .93fr) minmax(0, 1.07fr);
+  align-items: start;
+  gap: clamp(60px, 9vw, 170px);
+}
+.project-start__intro { position: sticky; top: clamp(112px, 13vh, 145px); }
+.project-start__eyebrow {
+  margin: 0 0 clamp(20px, 2.7vw, 36px);
+  color: var(--blue);
+  font: 600 clamp(10px, .8vw, 12px)/1.3 var(--font-ui);
+  text-transform: uppercase; letter-spacing: .17em;
+}
+.project-start__title {
+  margin: 0;
+  font: 400 clamp(52px, 6.1vw, 104px)/.99 var(--font-display);
+  letter-spacing: -.028em;
+  overflow-wrap: break-word;
+}
+.project-start__title > span { display: block; }
+.project-start__title > span:last-child { color: var(--blue); }
+.project-start__description {
+  max-width: 470px;
+  margin: clamp(32px, 4vh, 48px) 0 0;
+  font: 400 clamp(15px, 1.05vw, 18px)/1.65 var(--font-ui);
+  color: #535773;
+}
+.project-form { min-width: 0; border-top: 1px solid #B6B8CF; }
+.project-form__field {
+  position: relative;
+  padding: clamp(25px, 3.4vh, 36px) 0 clamp(20px, 3vh, 30px);
+  border-bottom: 1px solid #B6B8CF;
+}
+.project-form__label {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #5C6079;
+  font: 700 clamp(10px, .75vw, 12px)/1.5 var(--font-ui);
+  letter-spacing: .13em; text-transform: uppercase;
+}
+.project-form__label b { color: var(--blue); font-weight: 700; }
+.project-form__label em { font: inherit; font-size: 10px; font-style: normal; color: #7A7E97; }
+.project-form input,
+.project-form select,
+.project-form textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 8px 0 12px;
+  border: 0; outline: 0; border-radius: 0;
+  background-color: transparent;
+  color: var(--black-blue);
+  font: 400 clamp(22px, 2vw, 34px)/1.22 var(--font-display);
+  letter-spacing: -.016em;
+  transition: color 180ms ease;
+}
+.project-form input, .project-form select { min-height: 51px; }
+.project-form textarea { min-height: 150px; resize: vertical; }
+.project-form select {
+  -webkit-appearance: none; appearance: none;
+  cursor: pointer;
+  padding-right: 36px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--black-blue) 50%),
+    linear-gradient(135deg, var(--black-blue) 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-position: calc(100% - 13px) 52%, calc(100% - 7px) 52%;
+  background-size: 6px 6px;
+}
+.project-form option { color: var(--black-blue); background: var(--white-blue); }
+.project-form input::placeholder,
+.project-form textarea::placeholder { color: #888CA6; opacity: 1; }
+.project-form__field::after {
+  content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left;
+  transition: transform 350ms cubic-bezier(.22, 1, .36, 1);
+}
+.project-form__field:focus-within::after { transform: scaleX(1); }
+.project-form__field:focus-within .project-form__label { color: var(--black-blue); }
+.project-form__field.is-invalid::after { transform: scaleX(1); background: #A32E45; }
+.project-form__error {
+  display: none; margin: 10px 0 0;
+  color: #A32E45; font: 400 12px/1.5 var(--font-ui);
+}
+.project-form__field.is-invalid .project-form__error { display: block; }
+.project-form__actions { padding-top: clamp(40px, 5.5vh, 62px); }
+.project-form__submit {
+  display: inline-flex; align-items: center; gap: 11px;
+  padding: 0 0 10px;
+  border: 0; border-bottom: 1px solid var(--black-blue);
+  background: transparent; color: var(--black-blue);
+  cursor: pointer;
+  font: 400 clamp(17px, 1.4vw, 23px)/1.3 var(--font-display);
+  letter-spacing: .055em;
+  transition: color 250ms ease, border-color 250ms ease;
+}
+.project-form__submit:hover { color: var(--blue); border-color: var(--blue); }
+.project-form__submit-arrow { display: inline-block; transition: transform 250ms ease; }
+.project-form__submit:hover .project-form__submit-arrow { transform: translate(3px, -3px); }
+.project-form__submit:focus-visible,
+.project-form__fallback button:focus-visible { outline: 2px solid var(--blue); outline-offset: 6px; }
+.project-form__note { max-width: 480px; margin: 19px 0 0; color: #696D89; font: 400 12px/1.6 var(--font-ui); }
+.project-form__fallback { max-width: 560px; margin: 24px 0 0; padding: 20px 22px; border-left: 2px solid var(--blue); background: #D8DAEA; color: var(--black-blue); }
+.project-form__fallback[hidden] { display: none; }
+.project-form__fallback p { margin: 0 0 16px; font: 400 13px/1.6 var(--font-ui); }
+.project-form__fallback button { padding: 0 0 4px; border: 0; border-bottom: 1px solid var(--black-blue); background: transparent; color: var(--black-blue); font: 700 11px/1.5 var(--font-ui); letter-spacing: .08em; cursor: pointer; }
+@media (max-width: 1020px) {
+  .project-start__inner { grid-template-columns: 1fr; gap: 75px; }
+  .project-start__intro { position: static; }
+  .project-start__title { max-width: 750px; }
+}
+@media (max-width: 760px) {
+  .project-start { padding: 105px 0 110px; }
+  .project-start__inner { padding-inline: 22px; gap: 65px; }
+  .project-start__title { font-size: clamp(38px, 9.5vw, 63px); }
+  .project-start__description { font-size: 14px; }
+  .project-form__label { grid-template-columns: 29px minmax(0,1fr) auto; font-size: 10px; }
+  .project-form input, .project-form textarea, .project-form select { font-size: clamp(21px, 5.6vw, 29px); }
+  .project-form__field { padding-block: 25px; }
+  .project-form__submit { font-size: clamp(16px, 4.3vw, 19px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-form__field::after, .project-form__submit, .project-form__submit-arrow { transition: none; }
+}
+
+@media (min-width: 1021px) and (max-width: 1440px) {
+  .project-start__inner { gap: clamp(44px, 5vw, 78px); }
+  .project-start__title { font-size: clamp(49px, 5.25vw, 73px); line-height: 1.04; }
+  .project-form input, .project-form textarea, .project-form select { font-size: clamp(21px, 1.8vw, 28px); }
+}
+@media (min-width: 761px) and (max-height: 820px) {
+  .project-start { padding-block: 100px; }
+  .project-form__field { padding-block: 24px 20px; }
+}
+@media (max-width: 760px) {
+  .project-start { padding-block: 88px 95px; }
+  .project-start__inner { gap: 48px; }
+  .project-form__submit { gap: 9px; padding-bottom: 8px; }
+}
+
+/* ETAPA 23 — seleção do assunto mais discreta no desktop.
+   O select nativo permanece acessível ao teclado e ao leitor de tela. */
+.project-form select {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.25vw, 20px);
+  line-height: 1.4;
+  min-height: 44px;
+  padding: 7px 32px 9px 0;
+}
+.project-form select option {
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.35;
+}
+@media (max-width: 760px) {
+  .project-form select {
+    font-size: 18px;
+    min-height: 48px;
+  }
+  .project-form select option { font-size: 16px; }
+}
+
+/* ETAPA 30 — Campo condicional para contratar uma solução existente.
+   A seleção só aparece para quem demonstrou interesse nos produtos VORA. */
+.project-form__field[hidden] { display: none !important; }
+.project-form__field--conditional { animation: voraFormReveal .28s ease-out both; }
+@keyframes voraFormReveal { from { opacity: 0; transform: translateY(-7px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .project-form__field--conditional { animation: none; } }
+
+/* ETAPA 35 — Em notebooks compactos, os campos e a manchete precisam
+   de largura suficiente; evitar duas colunas excessivamente estreitas. */
+@media (min-width: 761px) and (max-width: 1180px) {
+  .project-start__inner { grid-template-columns: minmax(0, 1fr); gap: 52px; }
+  .project-start__intro { position: static; }
+  .project-start__title { max-width: 860px; font-size: clamp(55px, 6vw, 75px); }
+  .project-start__description { max-width: 620px; }
+  .project-form { width: 100%; max-width: 900px; }
+}

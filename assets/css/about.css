@@ -1,0 +1,117 @@
+/* VORA | Sobre + FAQ — Etapa 05. Sem estilos globais. */
+.about, .faq { position: relative; background: var(--white-blue); color: var(--black-blue); }
+.about { scroll-margin-top: var(--header-height, 106px); padding: clamp(112px, 14vw, 210px) 0 clamp(104px, 12vw, 185px); }
+.about__inner, .faq__inner { width: min(100%, 1710px); margin-inline: auto; padding-inline: var(--space-edge); }
+.about__eyebrow, .faq__eyebrow, .about__side-note {
+  margin: 0; font: 600 clamp(10px,.8vw,12px)/1.4 var(--font-ui,Arial,sans-serif);
+  letter-spacing: .18em; text-transform: uppercase;
+}
+.about__eyebrow { margin-bottom: clamp(50px,8vw,105px); color: var(--blue); }
+.about__title {
+  margin: 0; font: 400 clamp(40px, 6.55vw, 110px)/1.07 var(--font-display,Arial,sans-serif);
+  letter-spacing: -.025em; overflow-wrap: anywhere;
+}
+.about__title span { display: block; }
+.about__title .about__title--accent { color: var(--blue); }
+.about__bottom { display: grid; grid-template-columns: 1fr minmax(300px, 550px); gap: 50px;
+  margin-top: clamp(68px,10vw,150px); padding-top: 28px; border-top: 1px solid #B8BAD0; }
+.about__side-note { color: #656A88; }
+.about__description { max-width: 550px; color: #3C405D; font: 400 clamp(15px,1.06vw,18px)/1.65 var(--font-ui,Arial,sans-serif); }
+.about__description p { margin: 0 0 1.05em; }
+.about__description p:last-child { margin-bottom: 0; }
+
+.faq { padding: clamp(105px,14vw,180px) 0 clamp(105px,14vw,170px); }
+.faq__intro { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px,.7fr);
+  gap: clamp(36px,8vw,140px); align-items: end; padding-bottom: clamp(68px,9vw,110px); }
+.faq__eyebrow { margin-bottom: clamp(24px,3vw,35px); color: #656A88; }
+.faq__title { margin: 0; font: 400 clamp(54px,7.2vw,116px)/.95 var(--font-display,Arial,sans-serif);
+  letter-spacing: -.025em; }
+.faq__lead { max-width: 370px; margin: 0 0 6px auto;
+  font: 400 clamp(15px,1.05vw,18px)/1.55 var(--font-ui,Arial,sans-serif); color: #525672; }
+.faq__list { border-top: 1px solid #AEB2CB; }
+.faq__item { border-bottom: 1px solid #AEB2CB; }
+.faq__item-heading { margin: 0; font-size: inherit; font-weight: inherit; }
+.faq__trigger { display: grid; grid-template-columns: clamp(44px,4.8vw,72px) 1fr 34px;
+  align-items: center; width: 100%; min-height: clamp(92px,10vw,132px);
+  column-gap: clamp(16px,2vw,28px); padding: 12px 0; color: inherit;
+  border: 0; background: none; text-align: left; cursor: pointer; }
+.faq__number { color: #757A98; font: 600 clamp(10px,.75vw,12px)/1.4 var(--font-ui,Arial,sans-serif);
+  letter-spacing: .13em; transition: color 220ms ease; }
+.faq__question { font: 400 clamp(23px,2.25vw,40px)/1.13 var(--font-display,Arial,sans-serif);
+  letter-spacing: -.018em; transition: color 240ms ease, transform 300ms ease; }
+.faq__symbol { position: relative; display: block; justify-self: end; width: 26px; height: 26px; }
+.faq__symbol::before, .faq__symbol::after { content: ''; position: absolute; top: 50%; left: 50%;
+  width: 21px; height: 1.5px; background: currentColor; transform: translate(-50%,-50%);
+  transition: transform 300ms ease, background-color 230ms ease; }
+.faq__symbol::after { transform: translate(-50%,-50%) rotate(90deg); }
+.faq__item.is-open .faq__symbol::after { transform: translate(-50%,-50%) rotate(0); }
+.faq__trigger:hover .faq__question, .faq__item.is-open .faq__question { color: var(--blue); transform: translateX(2px); }
+.faq__trigger:hover .faq__number, .faq__item.is-open .faq__number { color: var(--blue); }
+.faq__trigger:focus-visible { outline: 2px solid var(--blue); outline-offset: -4px; }
+/* A altura e a opacidade são coordenadas pelo about.js. Não use
+   visibility nem grid-template-rows animados: eles causavam uma pausa
+   perceptível quando o usuário alternava entre duas perguntas. */
+.faq__answer { height: 0; opacity: 0; overflow: hidden; }
+.faq__answer-inner { display: flow-root; }
+.faq__list { overflow-anchor: none; }
+.faq__answer p { width: min(750px,88%); margin: 0; padding: 0 0 clamp(32px,4vw,49px) clamp(60px,6.75vw,105px);
+  font: 400 clamp(14px,1vw,17px)/1.65 var(--font-ui,Arial,sans-serif); color: #525672; }
+
+@media (max-width: 1000px) {
+  .faq__intro, .about__bottom { grid-template-columns: 1fr; }
+  .faq__lead { margin-left: 0; }
+  .about__bottom { gap: 26px; }
+}
+@media (max-width: 760px) {
+  .about { padding: 108px 0 100px; }
+  .about__inner, .faq__inner { padding-inline: 22px; }
+  .about__eyebrow { margin-bottom: 55px; }
+  .about__title { font-size: clamp(31px, 8.2vw, 62px); line-height: 1.16; }
+  .about__bottom { margin-top: 76px; }
+  .about__description { font-size: 15px; }
+  .faq { padding: 95px 0 108px; }
+  .faq__intro { gap: 27px; padding-bottom: 63px; }
+  .faq__title { font-size: clamp(40px,10.5vw,65px); }
+  .faq__lead { font-size: 14px; }
+  .faq__trigger { grid-template-columns: 28px minmax(0,1fr) 24px; gap: 12px; min-height: 88px; }
+  .faq__number { font-size: 10px; }
+  .faq__question { font-size: clamp(18px,5vw,24px); }
+  .faq__symbol { width: 22px; height: 22px; }
+  .faq__symbol::before, .faq__symbol::after { width: 18px; }
+  .faq__answer p { padding: 0 0 28px 40px; width: 100%; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq__question, .faq__number, .faq__answer, .faq__symbol::before, .faq__symbol::after { transition: none; }
+}
+
+/* Editorial com mais respiro nas letras em notebooks compactos. */
+@media (min-width: 761px) and (max-width: 1440px) {
+  .about__title { font-size: clamp(48px, 5.45vw, 78px); line-height: 1.13; }
+  .faq__title { font-size: clamp(46px, 6vw, 84px); }
+  .faq__question { font-size: clamp(21px, 2.1vw, 31px); }
+}
+@media (min-width: 761px) and (max-height: 820px) {
+  .about { padding-block: 92px 104px; }
+  .about__eyebrow { margin-bottom: 48px; }
+  .about__bottom { margin-top: 72px; }
+  .faq { padding-block: 90px; }
+  .faq__intro { padding-bottom: 52px; }
+}
+@media (max-width: 760px) {
+  .about { padding-block: 88px 92px; }
+  .about__eyebrow { margin-bottom: 38px; }
+  .about__bottom { margin-top: 58px; }
+  .about__title { letter-spacing: -.018em; overflow-wrap: normal; }
+  .faq { padding-block: 80px 92px; }
+  .faq__intro { padding-bottom: 40px; }
+  .faq__title { letter-spacing: -.018em; }
+}
+
+/* Etapa 18 — FAQ com respostas organizadas em parágrafos independentes. */
+.faq__answer-inner { padding-bottom: clamp(30px, 3.6vw, 46px); }
+.faq__answer p { padding-bottom: 0; }
+.faq__answer p + p { margin-top: .85em; }
+@media (max-width: 760px) {
+  .faq__answer-inner { padding-bottom: 28px; }
+  .faq__answer p { padding-bottom: 0; }
+}

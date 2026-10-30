@@ -1,0 +1,348 @@
+/* VORA · Work / galeria panorâmica no fundo Blackout.
+   Enquadramento original (300px / 2000px / 500px).
+   Regras isoladas: não alteram o Hero, o Header ou o restante da página. */
+.projects {
+  position: relative;
+  isolation: isolate;
+  height: 100svh;
+  min-height: 650px;
+  width: 100%;
+  overflow: hidden;
+  background: #000000;
+  color: #E4E5F2;
+  scroll-margin-top: 0;
+}
+.projects__heading {
+  position: absolute;
+  z-index: 5;
+  top: clamp(126px, 16vh, 164px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font: 400 clamp(29px, 3.1vw, 48px)/1.05 var(--font-display, sans-serif);
+  letter-spacing: -.025em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.projects__stage {
+  position: absolute;
+  /* O dragger atua somente na faixa das imagens; nunca sobre o CTA. */
+  top: clamp(160px, 19vh, 190px);
+  right: 0;
+  bottom: clamp(160px, 19vh, 190px);
+  left: 0;
+  z-index: 2;
+  outline-offset: -5px;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.projects__stage.is-dragging { cursor: grabbing; }
+.projects__stage:focus-visible { outline: 2px solid #2A3EF4; }
+/* A câmera é um quadrado de 300px, NÃO uma viewport com perspectiva
+   aplicada em toda a largura (isso achata a curvatura lateral). */
+.projects .container {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  perspective: 2000px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.projects #ring,
+.projects .img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+.projects #ring {
+  /* Rotação inicial original e enquadramento frontal do anel. */
+  transform: translateZ(500px) rotateY(180deg);
+}
+.projects .img {
+  background-size: 115% auto;
+  background-repeat: no-repeat;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-origin: 50% 50% 500px;
+  will-change: transform, opacity;
+}
+/* Vinheta original: suaviza as duas pontas sem escurecer o centro. */
+.projects .vignette {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  width: 1400px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(to left,
+    #000000 12%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, #000000 88%);
+  pointer-events: none;
+}
+.projects #dragger {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.projects__stage.is-dragging #dragger { cursor: grabbing; }
+.projects__caption {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  bottom: clamp(32px, 6vh, 64px);
+  width: max-content;
+  max-width: calc(100% - 36px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+.projects__name {
+  margin: 0;
+  font: 400 clamp(25px, 2.1vw, 35px)/1.1 var(--font-display, sans-serif);
+  letter-spacing: -.025em;
+  color: #E4E5F2;
+}
+.projects__visit {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0 7px;
+  border-bottom: 1px solid rgba(228,229,242,.56);
+  color: #E4E5F2;
+  text-decoration: none;
+  font: 400 13px/1.2 var(--font-ui, Arial, sans-serif);
+  letter-spacing: .085em;
+  transition: color .18s ease, border-color .18s ease;
+}
+.projects__visit:hover { color: #94A0FF; border-color: currentColor; }
+.projects__visit:focus-visible { outline: 2px solid #2A3EF4; outline-offset: 6px; }
+/* Sobre a galeria preta, o header fica transparente com texto claro. */
+.site-header.is-scrolled,
+.site-header.is-on-projects,
+.site-header.is-scrolled.is-on-projects {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.site-header.is-on-projects .site-header__logo,
+.site-header.is-on-projects .site-header__link { color: #E4E5F2; }
+.site-header.is-on-projects .site-header__link:hover { color: #94A0FF; }
+body.is-on-projects .language__button { color: #999DB9; }
+body.is-on-projects .language__button.is-current,
+body.is-on-projects .language__button:hover { color: #E4E5F2; }
+body.is-on-projects .language__separator { color: #777D9A; }
+@media (hover:hover) and (pointer:fine) and (min-width:761px) {
+  .site-header.is-on-projects .site-header__nav:hover .site-header__link:not(:hover) { color: #777E9B; }
+  .site-header.is-on-projects .site-header__link:hover { color: #94A0FF; }
+}
+@media (max-width:760px) {
+  .projects { min-height: 590px; }
+  .projects__stage { top: 155px; bottom: 145px; }
+  .projects__heading { top: max(110px, 14vh); font-size: 31px; }
+  .projects .container { top: 49%; transform: translate(-50%, -50%) scale(.84); }
+  .projects__caption { bottom: clamp(52px, 8vh, 76px); }
+  .projects .vignette { width: 110vw; background: linear-gradient(to right, #000000 0%, transparent 18%, transparent 82%, #000000 100%); }
+  .site-header.is-on-projects .site-header__toggle { color:#0E0F28; background:#E4E5F2; }
+  body.menu-is-open .site-header.is-on-projects { background:transparent; backdrop-filter:none; }
+  body.menu-is-open .site-header.is-on-projects .site-header__logo { color:#E4E5F2; }
+  body.menu-is-open .site-header.is-on-projects .site-header__toggle { color:#0E0F28; background:#E4E5F2; }
+}
+@media (max-width:390px) {
+  .projects .container { transform: translate(-50%, -50%) scale(.77); }
+  .projects__stage { top: 140px; bottom: 145px; }
+  .projects__heading { font-size: 29px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .projects .img { will-change: auto; }
+  .projects__visit { transition: none; }
+}
+
+/* Escala do Work em notebooks e celulares menores. */
+@media (min-width: 761px) and (max-height: 820px) {
+  .projects__heading { top: clamp(110px, 14vh, 130px); font-size: clamp(29px, 2.8vw, 39px); }
+  .projects__stage { top: 148px; bottom: 138px; }
+  .projects__caption { bottom: clamp(22px, 4vh, 34px); gap: 7px; }
+  .projects__name { font-size: clamp(25px, 2vw, 30px); }
+  .projects__visit { font-size: 12px; }
+}
+@media (max-width: 760px) {
+  .projects__heading { font-size: clamp(25px, 7vw, 30px); }
+  .projects__name { font-size: clamp(23px, 6.4vw, 29px); }
+  .projects__visit { font-size: 12px; gap: 8px; }
+  .projects__caption { gap: 7px; }
+}
+
+/* ETAPA 20 — filtros capsule/glass, abaixo do título Work.
+   Scoped: nenhuma regra global da referência altera o restante do site. */
+.projects__filters {
+  position: absolute;
+  z-index: 9;
+  top: clamp(195px, 22vh, 225px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  flex-wrap: wrap;
+  width: max-content;
+  max-width: calc(100% - 36px);
+}
+.projects__filter {
+  --glass-fill: rgba(228,229,242,.08);
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 21px;
+  border-radius: 999px;
+  border: 1px solid rgba(228,229,242,.24);
+  color: var(--white-blue, #E4E5F2);
+  background: var(--glass-fill);
+  box-shadow:
+    inset 1px 1px 1px rgba(255,255,255,.30),
+    inset -1px -1px 1px rgba(255,255,255,.08),
+    inset 0 0 2px rgba(255,255,255,.12),
+    0 4px 15px rgba(0,0,0,.16);
+  -webkit-backdrop-filter: blur(5px) saturate(1.25);
+  backdrop-filter: blur(5px) saturate(1.25);
+  cursor: pointer;
+  font: 400 14px/1.15 var(--font-display, "Recady", sans-serif);
+  letter-spacing: .02em;
+  white-space: nowrap;
+  transition: background .32s ease, border-color .32s ease, box-shadow .32s ease, transform .32s cubic-bezier(.22,1,.36,1), color .32s ease;
+}
+.projects__filter::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(130deg, rgba(255,255,255,.20), transparent 27%, transparent 67%, rgba(255,255,255,.07));
+}
+/* Rótulo centralizado e fonte oficial VORA (Recady). */
+.projects__filter-text {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.projects__filter:is(:hover, :focus-visible) {
+  transform: translateY(-2px);
+  background: rgba(228,229,242,.16);
+  border-color: rgba(228,229,242,.56);
+}
+.projects__filter.is-active {
+  background: rgba(42,62,244,.22);
+  border-color: rgba(125,141,255,.90);
+  box-shadow: inset 1px 1px 2px rgba(255,255,255,.20), 0 0 0 1px rgba(42,62,244,.16), 0 5px 18px rgba(0,0,0,.16);
+}
+.projects__filter:focus-visible { outline: 2px solid #E4E5F2; outline-offset: 3px; }
+.projects__filter:active { transform: translateY(0) scale(.97); }
+.projects__stage.is-single-project,
+.projects__stage.is-single-project #dragger { cursor: default; }
+/* Área do arraste começa após o título e os filtros. */
+.projects__stage { top: clamp(266px, 30vh, 295px); bottom: clamp(120px, 16vh, 155px); }
+@media (min-width: 761px) and (max-height: 820px) {
+  .projects__filters { top: clamp(177px, 22vh, 198px); }
+  .projects__stage { top: clamp(228px, 29vh, 260px); bottom: 126px; }
+}
+@media (max-width: 760px) {
+  .projects { min-height: 760px; }
+  .projects__filters { top: max(165px, 18vh); gap: 7px; max-width: calc(100% - 22px); }
+  .projects__filter { min-height: 38px; padding: 9px 15px; font-size: 12px; }
+  .projects__stage { top: 304px; bottom: 160px; }
+  .projects__caption { bottom: 54px; }
+}
+@media (max-width: 370px) {
+  .projects__filters { top: 157px; }
+  .projects__stage { top: 330px; }
+  .projects__filter { font-size: 11px; padding-inline: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .projects__filter { transition: none; }
+}
+
+/* ETAPA 35 — Notebooks e desktops compactos.
+   O anel original permanece com geometria 300/2000/500; diminuímos
+   somente o enquadramento visual quando a janela é mais estreita/baixa.
+   Isto impede que os cartões encostem nos filtros e preserva o 3D. */
+@media (min-width: 761px) and (max-width: 1280px) {
+  .projects .container {
+    transform: translate(-50%, -50%) scale(.90);
+  }
+  .projects__filters {
+    max-width: min(96%, 900px);
+    row-gap: 10px;
+  }
+  .projects__filter {
+    padding-inline: clamp(13px, 1.65vw, 19px);
+    font-size: clamp(12px, 1.17vw, 14px);
+  }
+  .projects__caption { gap: 7px; }
+}
+
+/* A altura da janela também faz parte do layout. Em notebooks 16:9
+   com barra de tarefas, os cartões não podem manter os mesmos 300px. */
+@media (min-width: 761px) and (max-height: 740px) {
+  .projects { height: max(620px, 100svh); min-height: 620px; }
+  .projects__heading { top: 117px; font-size: clamp(29px, 2.85vw, 37px); }
+  .projects__filters { top: 176px; gap: 8px; }
+  .projects__filter { min-height: 40px; padding-block: 8px; }
+  .projects__stage { top: 225px; bottom: 107px; }
+  .projects .container { transform: translate(-50%, -50%) scale(.82); }
+  .projects__caption { bottom: 27px; }
+  .projects__name { font-size: clamp(24px, 2.25vw, 29px); }
+}
+
+@media (min-width: 761px) and (max-height: 650px) {
+  .projects { height: max(590px, 100svh); min-height: 590px; }
+  .projects__heading { top: 112px; font-size: 30px; }
+  .projects__filters { top: 163px; }
+  .projects__stage { top: 211px; bottom: 92px; }
+  .projects .container { transform: translate(-50%, -50%) scale(.72); }
+  .projects__caption { bottom: 20px; }
+  .projects__name { font-size: 24px; }
+  .projects__visit { font-size: 11px; }
+}
+
+/* Se a janela é excepcionalmente baixa, priorizamos a leitura e a
+   navegação; a seção pode ocupar alguns pixels além da dobra. */
+@media (min-width: 761px) and (max-height: 560px) {
+  .projects { height: max(510px, 100svh); min-height: 510px; }
+  .projects__heading { top: 109px; font-size: 28px; }
+  .projects__filters { top: 153px; gap: 6px; }
+  .projects__filter { min-height: 35px; padding-block: 6px; }
+  .projects__stage { top: 195px; bottom: 72px; }
+  .projects .container { transform: translate(-50%, -50%) scale(.60); }
+  .projects__caption { bottom: 9px; gap: 5px; }
+  .projects__name { font-size: 22px; }
+}
+
+/* As regras de notebooks jamais devem reduzir a galeria mobile,
+   que tem seu próprio enquadramento e gestos. */

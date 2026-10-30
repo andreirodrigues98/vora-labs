@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#E4E5F2" />
+    <meta name="description" content="VORA — Desenvolvendo soluções criativas para seu negócio!" />
+    <title>VORA — Estúdio Digital</title>
+
+    <link rel="preload" href="assets/fonts/Recady.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="assets/css/loader.css" />
+    <!-- ETAPA 02: estilos próprios do header e menu mobile -->
+    <link rel="stylesheet" href="assets/css/header.css" />
+    <link rel="stylesheet" href="assets/css/hero.css" />
+    <link rel="stylesheet" href="assets/css/projects.css" />
+    <link rel="stylesheet" href="assets/css/about.css" />
+    <link rel="stylesheet" href="assets/css/contact.css" />
+    <link rel="stylesheet" href="assets/css/reveal.css" />
+    <link rel="stylesheet" href="assets/css/footer.css" />
+
+    <script src="assets/js/i18n.js" defer></script>
+    <script src="assets/js/loader.js" defer></script>
+    <script src="assets/js/header.js" defer></script>
+    <script src="assets/js/hero.js" defer></script>
+    <script src="assets/js/projects.js" defer></script>
+    <script src="assets/js/about.js" defer></script>
+    <script src="assets/js/contact.js" defer></script>
+    <script src="assets/js/reveal.js" defer></script>
+    <script src="assets/js/navigation.js" defer></script>
+    <script src="assets/js/footer.js" defer></script>
+  </head>
+  <body class="is-loading">
+    <!-- HEADER: fica oculto durante o carregamento e surge depois. -->
+    <header class="site-header" id="site-header">
+      <a class="site-header__logo" href="#site-content" data-i18n-aria-label="homeAria" aria-label="VORA — Início"><img class="site-header__logo-image site-header__logo-image--dark" src="./assets/images/brand/vora-dark.png" alt="" /><img class="site-header__logo-image site-header__logo-image--light" src="./assets/images/brand/vora-white.png" alt="" /></a>
+
+      <nav class="site-header__nav" aria-label="Menu principal" data-i18n-aria-label="menuAria">
+        <!-- Âncoras previstas para as próximas etapas: as seções ainda não existem. -->
+        <a class="site-header__link" href="#projetos" data-i18n="navWork">Projetos</a>
+        <a class="site-header__link" href="#sobre" data-i18n="navAbout">Sobre</a>
+        <a class="site-header__link" href="#contato" data-i18n="navContact">Contato</a>
+      </nav>
+
+      <button
+        class="site-header__toggle"
+        type="button"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Abrir menu"
+        data-i18n-aria-label="menuOpenAria"
+      >
+        <span class="site-header__toggle-bars" aria-hidden="true">
+          <span class="site-header__toggle-line"></span>
+          <span class="site-header__toggle-line"></span>
+        </span>
+      </button>
+    </header>
+
+    <!-- Centralizado no topo, inclusive na tela de carregamento. -->
+    <nav class="language" aria-label="Selecionar idioma" data-i18n-aria-label="languageAria">
+      <button type="button" class="language__button is-current" data-language="pt-BR" aria-pressed="true">PT</button>
+      <span class="language__separator" aria-hidden="true">/</span>
+      <button type="button" class="language__button" data-language="en-US" aria-pressed="false">EN</button>
+    </nav>
+
+    <!-- Navegação mobile: tela cheia, com estilo editorial. -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Menu mobile" data-i18n-aria-label="mobileMenuAria" aria-hidden="true" inert>
+      <div class="mobile-menu__inner">
+        <a class="mobile-menu__link mobile-menu__link--one" href="#projetos" data-i18n="navWork">Projetos</a>
+        <a class="mobile-menu__link mobile-menu__link--two" href="#sobre" data-i18n="navAbout">Sobre</a>
+        <a class="mobile-menu__link mobile-menu__link--three" href="#contato" data-i18n="navContact">Contato</a>
+      </div>
+    </nav>
+
+    <!-- ETAPA 01: carregamento mantido exatamente como na versão aprovada. -->
+    <section class="loader" id="loader" aria-label="Carregamento do site" data-i18n-aria-label="loadingAria">
+      <div class="loader__stage" aria-hidden="true">
+        <p class="loader__stage-item" data-stage="0">VORA<span class="brand-dot">.</span></p>
+        <p class="loader__stage-item" data-stage="1" data-i18n="studio">SOLUÇÕES CRIATIVAS</p>
+        <p class="loader__stage-item loader__stage-item--end" data-stage="2" data-i18n="based">SITES, INTERFACES E SOFTWARES</p>
+      </div>
+
+      <div class="loader__counter" aria-hidden="true">
+        <span class="loader__number" id="progress-number">0</span>
+        <span class="loader__symbol">%</span>
+      </div>
+    </section>
+
+    <!-- Hero VORA: texto original e cena Spline transparente exportada pelo usuário. -->
+    <main class="site-shell" id="site-content" aria-hidden="true" inert>
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hero__spline-stage" aria-hidden="true">
+          <spline-viewer class="hero__spline-viewer" id="hero-spline-viewer" url="assets/spline/radiant-shift.splinecode" loading="eager" background="rgba(0,0,0,0)" events-target="local" intercept-scroll="false" hidden></spline-viewer>
+          <p class="hero__spline-status" id="hero-spline-status" role="status" hidden>Não foi possível carregar a animação 3D. Verifique sua conexão e atualize a página.</p>
+        </div>
+        <div class="hero__copy">
+          <p class="hero__eyebrow" data-i18n="heroEyebrow">Tecnologia, estratégia e criatividade.</p>
+          <h1 class="hero__title" id="hero-title" data-i18n="heroTitle" data-reveal="up">Desenvolvendo soluções criativas para seu negócio!</h1>
+          <p class="hero__description" data-i18n="heroDescription">Entendemos o contexto antes de definir a solução. Unimos criatividade, estratégia e tecnologia para desenvolver sites, sistemas e aplicações que transformam necessidades reais em experiências digitais únicas.</p>
+          <a class="hero__cta" href="#projetos"><span data-i18n="heroCta">Explorar projetos</span><span class="cta-arrow" aria-hidden="true"><svg class="cta-arrow__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 19 19 5M8 5h11v11"/></svg></span></a>
+        </div>
+      </section>
+      <!-- WORK / PROJETOS — Galeria panorâmica 3D retomada. -->
+      <section class="projects" id="projetos" aria-labelledby="projects-title">
+        <h2 class="projects__heading" id="projects-title" data-i18n="navWork" data-reveal="up">Projetos</h2>
+        <div class="projects__filters" role="group" data-i18n-aria-label="projectsFiltersAria" aria-label="Filtrar projetos por tipo">
+          <button class="projects__filter is-active" type="button" data-project-filter="all" aria-pressed="true">
+            <span class="projects__filter-text" data-i18n="projectsFilterAll">Todos</span>
+          </button>
+          <button class="projects__filter" type="button" data-project-filter="sites" aria-pressed="false">
+            <span class="projects__filter-text" data-i18n="projectsFilterSites">Sites</span>
+          </button>
+          <button class="projects__filter" type="button" data-project-filter="commerce" aria-pressed="false">
+            <span class="projects__filter-text" data-i18n="projectsFilterCommerce">E-commerce</span>
+          </button>
+          <button class="projects__filter" type="button" data-project-filter="systems" aria-pressed="false">
+            <span class="projects__filter-text" data-i18n="projectsFilterSystems">Sistemas &amp; Apps</span>
+          </button>
+          <button class="projects__filter" type="button" data-project-filter="automations" aria-pressed="false">
+            <span class="projects__filter-text" data-i18n="projectsFilterAutomation">Automações</span>
+          </button>
+        </div>
+        <div class="projects__stage" id="projects-stage" tabindex="0" role="region"
+             aria-roledescription="carrossel" data-i18n-aria-label="projectsStageAria"
+             aria-label="Galeria circular de projetos. Arraste para navegar ou use as setas do teclado.">
+          <div class="container">
+            <div id="ring" aria-hidden="true">
+                            <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+              <div class="img"></div>
+            </div>
+          </div>
+          <div class="vignette" aria-hidden="true"></div>
+          <div id="dragger" aria-hidden="true"></div>
+        </div>
+        <div class="projects__caption" aria-live="polite" aria-atomic="true">
+          <h3 class="projects__name" id="projects-name">OnTable</h3>
+          <a class="projects__visit" id="projects-visit"
+             href="cases/ontable.html">
+            <span id="projects-visit-label">Ver case</span><span class="cta-arrow" aria-hidden="true"><svg class="cta-arrow__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 19 19 5M8 5h11v11"/></svg></span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ETAPA 05: Sobre — a identidade da VORA além dos formatos de entrega. -->
+      <section class="about" id="sobre" aria-labelledby="about-title">
+        <div class="about__inner">
+          <p class="about__eyebrow" data-i18n="aboutEyebrow">03 / SOBRE A VORA</p>
+          <h2 class="about__title" id="about-title" data-reveal-group="about">
+            <span data-i18n="aboutLine1" data-reveal="left">Criatividade aplicada.</span>
+            <span data-i18n="aboutLine2" data-reveal="left">Experiências digitais.</span>
+            <span data-i18n="aboutLine3" data-reveal="left">Sites, softwares e sistemas.</span>
+            <span class="about__title--accent" data-i18n="aboutLine4" data-reveal="left">Tecnologia com propósito.</span>
+          </h2>
+          <div class="about__bottom">
+            <p class="about__side-note" data-i18n="aboutSideNote">ESTRATÉGIA / CRIATIVIDADE / TECNOLOGIA</p>
+            <div class="about__description">
+              <p data-i18n="aboutDescription1">Na VORA, cada projeto começa pela compreensão do desafio.</p>
+              <p data-i18n="aboutDescription2">Unimos pensamento criativo, estratégia e desenvolvimento tecnológico para construir soluções digitais que conectam as necessidades de cada negócio a experiências funcionais, intuitivas e bem executadas.</p>
+              <p data-i18n="aboutDescription3">Não partimos de soluções prontas. Exploramos possibilidades e desenvolvemos o que faz sentido para cada realidade.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 05: FAQ inspirado na estrutura editorial numerada da referência. -->
+      <section class="faq" id="faq" aria-labelledby="faq-title">
+        <div class="faq__inner">
+          <div class="faq__intro">
+            <div>
+              <p class="faq__eyebrow" data-i18n="faqEyebrow">04 / PERGUNTAS FREQUENTES</p>
+              <h2 class="faq__title" id="faq-title" data-i18n="faqTitle" data-reveal="right">Antes de começar.</h2>
+            </div>
+            <p class="faq__lead" data-i18n="faqLead">Algumas respostas sobre ideias, projetos e como trabalhamos.</p>
+          </div>
+          <div class="faq__list">
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-1" id="faq-question-1">
+                  <span class="faq__number">01</span><span class="faq__question" data-i18n="faqQuestion1">O que a VORA desenvolve?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="true">
+                <div class="faq__answer-inner">
+                <p data-i18n="faqAnswer1">Desenvolvemos sites institucionais, landing pages, e-commerces, softwares, sistemas personalizados, aplicações SaaS, interfaces digitais e automações.</p>
+                <p data-i18n="faqAnswer1b">Cada solução é pensada a partir das necessidades do negócio, combinando estratégia, criatividade e tecnologia para entregar experiências funcionais, intuitivas e bem construídas.</p>
+                </div>
+              </div>
+            </article>
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-products" id="faq-question-products">
+                  <span class="faq__number">02</span><span class="faq__question" data-i18n="faqQuestionProducts">Posso contratar uma solução já desenvolvida pela VORA?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-products" role="region" aria-labelledby="faq-question-products" aria-hidden="true">
+                <div class="faq__answer-inner">
+                  <p data-i18n="faqAnswerProducts">Sim. Além de desenvolver projetos personalizados, a VORA disponibiliza soluções digitais para necessidades específicas de diferentes negócios.</p>
+                  <p data-i18n="faqAnswerProductsB">Entre elas estão OnTable, Controly, RodaPay e ConciliaPy. As modalidades de contratação, como assinatura ou aquisição, variam conforme cada solução.</p>
+                  <p data-i18n="faqAnswerProductsC">Entre em contato para conhecer funcionalidades, condições e entender qual opção faz sentido para sua operação.</p>
+                </div>
+              </div>
+            </article>
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-2" id="faq-question-2">
+                  <span class="faq__number">03</span><span class="faq__question" data-i18n="faqQuestion2">Como um projeto começa?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="true">
+                <div class="faq__answer-inner">
+                <p data-i18n="faqAnswer2">Tudo começa com uma conversa.</p>
+                <p data-i18n="faqAnswer2b">Buscamos compreender seu negócio, seus objetivos e o que precisa ser melhorado ou desenvolvido.</p>
+                <p data-i18n="faqAnswer2c">A partir desse entendimento, avaliamos as possibilidades e definimos a solução mais adequada, considerando funcionalidades, experiência e viabilidade técnica.</p>
+                </div>
+              </div>
+            </article>
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-3" id="faq-question-3">
+                  <span class="faq__number">04</span><span class="faq__question" data-i18n="faqQuestion3">A VORA trabalha com sistemas e sites já existentes?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="true">
+                <div class="faq__answer-inner">
+                <p data-i18n="faqAnswer3">Sim. Também podemos atuar na modernização e evolução de soluções digitais existentes.</p>
+                <p data-i18n="faqAnswer3b">Analisamos a estrutura atual para identificar possibilidades de melhoria, novas funcionalidades, integrações e aprimoramentos na experiência de uso.</p>
+                </div>
+              </div>
+            </article>
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-4" id="faq-question-4">
+                  <span class="faq__number">05</span><span class="faq__question" data-i18n="faqQuestion4">Preciso ter minha ideia totalmente definida?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="true">
+                <div class="faq__answer-inner">
+                <p data-i18n="faqAnswer4">Não. Você pode chegar com uma ideia, uma necessidade ou até mesmo um problema que ainda não sabe como resolver.</p>
+                <p data-i18n="faqAnswer4b">Ajudamos a transformar esse ponto de partida em uma proposta clara, definindo as possibilidades e o caminho mais adequado para o desenvolvimento.</p>
+                </div>
+              </div>
+            </article>
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-5" id="faq-question-5">
+                  <span class="faq__number">06</span><span class="faq__question" data-i18n="faqQuestion5">A VORA também desenvolve automações?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" aria-hidden="true">
+                <div class="faq__answer-inner">
+                <p data-i18n="faqAnswer5">Sim. Desenvolvemos automações para simplificar processos, reduzir tarefas repetitivas e conectar diferentes etapas da operação.</p>
+                <p data-i18n="faqAnswer5b">O objetivo é fazer com que a tecnologia trabalhe a favor do negócio, proporcionando mais organização, agilidade e eficiência no dia a dia.</p>
+                </div>
+              </div>
+            </article>
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-6" id="faq-question-6">
+                  <span class="faq__number">07</span><span class="faq__question" data-i18n="faqQuestion6">Qual a diferença entre uma solução pronta e um sistema personalizado?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" aria-hidden="true">
+                <div class="faq__answer-inner">
+                <p data-i18n="faqAnswer6">Soluções prontas são desenvolvidas para atender necessidades comuns a diferentes negócios.</p>
+                <p data-i18n="faqAnswer6b">Já um sistema personalizado é projetado considerando processos, funcionalidades e particularidades de uma operação específica.</p>
+                <p data-i18n="faqAnswer6c">Na VORA, avaliamos cada necessidade para entender quando o desenvolvimento sob medida realmente faz sentido.</p>
+                </div>
+              </div>
+            </article>
+            <article class="faq__item">
+              <h3 class="faq__item-heading">
+                <button class="faq__trigger" type="button" aria-expanded="false" aria-controls="faq-answer-7" id="faq-question-7">
+                  <span class="faq__number">08</span><span class="faq__question" data-i18n="faqQuestion7">Como posso solicitar um projeto?</span>
+                  <span class="faq__symbol" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="faq__answer" id="faq-answer-7" role="region" aria-labelledby="faq-question-7" aria-hidden="true">
+                <div class="faq__answer-inner">
+                <p data-i18n="faqAnswer7">Basta entrar em contato e contar um pouco sobre o que você precisa.</p>
+                <p data-i18n="faqAnswer7b">Pode ser um novo site, um sistema para sua empresa, uma automação ou uma ideia de produto digital.</p>
+                <p data-i18n="faqAnswer7c">A partir dessa primeira conversa, podemos entender o desafio e avaliar os próximos passos para transformar sua necessidade em uma solução.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ETAPA 06: contato inspirado no layout editorial do Commit Labs, adaptado à VORA. -->
+      <section class="project-start" id="contato" aria-labelledby="project-start-title">
+        <div class="project-start__inner">
+          <div class="project-start__intro">
+            <p class="project-start__eyebrow" data-i18n="contactEyebrow">05 / INICIAR UM PROJETO</p>
+            <h2 id="project-start-title" class="project-start__title" data-reveal-group="contact">
+              <span data-i18n="contactTitle1" data-reveal="up">VAMOS DAR FORMA</span>
+              <span data-i18n="contactTitle2" data-reveal="up">À SUA IDEIA.</span>
+            </h2>
+            <p class="project-start__description" data-i18n="contactDescription">Conte o que você quer criar, transformar ou melhorar. O melhor caminho começa por entender o desafio.</p>
+          </div>
+
+          <form class="project-form" id="vora-contact-form" novalidate>
+            <div class="project-form__field" data-field="name">
+              <label for="contact-name" class="project-form__label"><b>01</b><span data-i18n="contactNameLabel">SEU NOME *</span></label>
+              <input id="contact-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="100" required placeholder="Como podemos chamar você?" data-i18n-placeholder="contactNamePlaceholder" aria-describedby="contact-name-error" />
+              <p class="project-form__error" id="contact-name-error" data-i18n="contactNameError">Informe seu nome.</p>
+            </div>
+
+            <div class="project-form__field" data-field="company">
+              <label for="contact-company" class="project-form__label"><b>02</b><span data-i18n="contactCompanyLabel">EMPRESA / PROJETO</span><em data-i18n="contactOptional">OPCIONAL</em></label>
+              <input id="contact-company" type="text" name="company" autocomplete="organization" maxlength="160" placeholder="Nome da empresa ou projeto" data-i18n-placeholder="contactCompanyPlaceholder" />
+            </div>
+
+            <div class="project-form__field" data-field="whatsapp">
+              <label for="contact-whatsapp" class="project-form__label"><b>03</b><span>WHATSAPP *</span></label>
+              <input id="contact-whatsapp" type="tel" name="whatsapp" inputmode="numeric" autocomplete="tel-national" placeholder="(DD) 00000-0000" pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}" maxlength="15" required aria-describedby="contact-whatsapp-error" />
+              <p class="project-form__error" id="contact-whatsapp-error" data-i18n="contactWhatsappError">Informe um telefone com DDD.</p>
+            </div>
+
+            <div class="project-form__field" data-field="email">
+              <label for="contact-email" class="project-form__label"><b>04</b><span data-i18n="contactEmailLabel">SEU E-MAIL *</span></label>
+              <input id="contact-email" type="email" name="email" autocomplete="email" maxlength="180" required placeholder="voce@exemplo.com" data-i18n-placeholder="contactEmailPlaceholder" aria-describedby="contact-email-error" />
+              <p class="project-form__error" id="contact-email-error" data-i18n="contactEmailError">Informe um e-mail válido.</p>
+            </div>
+
+            <div class="project-form__field" data-field="projectType">
+              <label for="contact-project-type" class="project-form__label"><b>05</b><span data-i18n="contactTypeLabel">SOBRE O QUE VAMOS CONVERSAR? *</span></label>
+              <select id="contact-project-type" name="projectType" required aria-describedby="contact-project-type-error">
+                <option value="" data-i18n="contactTypePlaceholder">Selecione uma opção</option>
+                <option value="experience" data-i18n="contactTypeExperience">Experiência digital</option>
+                <option value="product" data-i18n="contactTypeProduct">Produto digital ou sistema</option>
+                <option value="vora-solution" data-i18n="contactTypeVoraSolution">Conhecer uma solução da VORA</option>
+                <option value="evolution" data-i18n="contactTypeEvolution">Evolução de uma solução existente</option>
+                <option value="automation" data-i18n="contactTypeAutomation">Automação ou integração</option>
+                <option value="other" data-i18n="contactTypeOther">Tenho uma ideia / outro desafio</option>
+              </select>
+              <p class="project-form__error" id="contact-project-type-error" data-i18n="contactTypeError">Escolha uma opção.</p>
+            </div>
+
+            <div class="project-form__field project-form__field--conditional" data-field="voraSolution" id="vora-solution-field" hidden>
+              <label for="contact-vora-solution" class="project-form__label"><b>06</b><span data-i18n="contactSolutionLabel">QUAL SOLUÇÃO DESPERTOU SEU INTERESSE? *</span></label>
+              <select id="contact-vora-solution" name="voraSolution" aria-describedby="contact-vora-solution-error" disabled>
+                <option value="" data-i18n="contactSolutionPlaceholder">Selecione uma solução</option>
+                <option value="ontable">OnTable</option>
+                <option value="controly">Controly</option>
+                <option value="rodapay">RodaPay</option>
+                <option value="conciliapy">ConciliaPy</option>
+                <option value="undecided" data-i18n="contactSolutionUndecided">Ainda não sei qual escolher</option>
+              </select>
+              <p class="project-form__error" id="contact-vora-solution-error" data-i18n="contactSolutionError">Escolha uma solução ou indique que ainda não decidiu.</p>
+            </div>
+
+            <div class="project-form__field project-form__field--message" data-field="message">
+              <label for="contact-message" class="project-form__label"><b id="contact-message-number">06</b><span data-i18n="contactMessageLabel">CONTE UM POUCO SOBRE SEU DESAFIO *</span></label>
+              <textarea id="contact-message" name="message" rows="4" minlength="10" maxlength="5000" required placeholder="Pode começar com uma ideia, um desafio ou algo que você queira melhorar." data-i18n-placeholder="contactMessagePlaceholder" aria-describedby="contact-message-error"></textarea>
+              <p class="project-form__error" id="contact-message-error" data-i18n="contactMessageError">Escreva pelo menos 10 caracteres.</p>
+            </div>
+
+            <div class="project-form__actions">
+              <button class="project-form__submit" type="submit">
+                <span class="project-form__submit-text" data-i18n="contactSubmit">INICIAR CONVERSA</span>
+                <span class="project-form__submit-arrow cta-arrow" aria-hidden="true"><svg class="cta-arrow__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 19 19 5M8 5h11v11"/></svg></span>
+              </button>
+              <p class="project-form__note" data-i18n="contactPrivacy">Seus dados serão usados apenas para responder à sua solicitação.</p>
+              <div class="project-form__fallback" id="vora-contact-fallback" role="status" aria-live="polite" hidden>
+                <p id="vora-contact-fallback-message"></p>
+                <button type="button" id="vora-contact-copy" data-i18n="contactCopy">COPIAR MENSAGEM</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ETAPA 15: Footer VORA, faixas da marca e selo central conforme referências. -->
+    <footer class="hi-footer" id="rodape" aria-label="VORA — Footer">
+      <div class="hi-footer__top">
+        <div class="hi-footer__col">
+          <p class="hi-footer__kicker" data-i18n="footerKicker">TEM UMA IDEIA EM MENTE?</p>
+          <a class="hi-footer__pill" href="#contato"><span class="hi-flip "><span class="hi-front" data-i18n="footerStart">INICIAR UM PROJETO</span><span class="hi-back" data-i18n="footerStart" aria-hidden="true">INICIAR UM PROJETO</span></span></a>
+        </div>
+        <a class="hi-footer__link" href="https://www.instagram.com/voralabs_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da VORA, @voralabs_">
+          <span class="hi-flip"><span class="hi-front">INSTAGRAM</span><span class="hi-back" aria-hidden="true">INSTAGRAM</span></span>
+        </a>
+        <a class="hi-footer__link" href="mailto:studiovoralabs@hotmail.com" aria-label="Enviar e-mail para studiovoralabs@hotmail.com">
+          <span class="hi-flip"><span class="hi-front">E-MAIL</span><span class="hi-back" aria-hidden="true">E-MAIL</span></span>
+        </a>
+        <button class="hi-footer__back" type="button" data-i18n-aria-label="footerBackAria" aria-label="Voltar ao topo">
+          <span class="hi-footer__backIcon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5m0 0-7 7m7-7 7 7"/></svg></span>
+          <span class="hi-footer__backText" data-i18n="footerBack">VOLTAR AO TOPO</span>
+        </button>
+      </div>
+      <!-- Duas linhas tipográficas contínuas e um único selo central, como na referência. -->
+      <div class="hi-footer__stage" aria-label="VORA — movimento editorial">
+        <div class="hi-footer__marquee hi-footer__marquee--top" aria-hidden="true">
+          <div class="hi-footer__track hi-footer__track--right">
+            <div class="hi-footer__marquee-group"><span data-i18n="footerMarquee">SOLUÇÕES CRIATIVAS PARA O SEU NEGÓCIO.</span></div>
+            <div class="hi-footer__marquee-group"><span data-i18n="footerMarquee">SOLUÇÕES CRIATIVAS PARA O SEU NEGÓCIO.</span></div>
+          </div>
+        </div>
+        <div class="hi-footer__marquee hi-footer__marquee--bottom" aria-hidden="true">
+          <div class="hi-footer__track hi-footer__track--left">
+            <div class="hi-footer__marquee-group"><span data-i18n="footerMarquee">SOLUÇÕES CRIATIVAS PARA O SEU NEGÓCIO.</span></div>
+            <div class="hi-footer__marquee-group"><span data-i18n="footerMarquee">SOLUÇÕES CRIATIVAS PARA O SEU NEGÓCIO.</span></div>
+          </div>
+        </div>
+        <a class="hi-footer__circle" href="#contato" data-i18n-aria-label="footerCircleAria" aria-label="Vamos conversar sobre seu projeto">
+          <svg class="hi-footer__ring" viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+            <defs><path id="vora-footer-ring-path" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
+            <text class="hi-footer__ringText"><textPath href="#vora-footer-ring-path" startOffset="50%" text-anchor="middle" textLength="480" lengthAdjust="spacing" data-i18n="footerCircleText">VORA • ESTRATÉGIA • CRIATIVIDADE • INOVAÇÃO •</textPath></text>
+          </svg>
+          <span class="hi-footer__circleCore">
+            <svg class="hi-footer__circleArrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5M9 5h10v10" /></svg>
+          </span>
+        </a>
+      </div>
+      <a class="hi-footer__signature" href="#inicio" aria-label="VORA — início"><img class="hi-footer__signature-image" src="./assets/images/brand/vora-white-with-symbol.png" alt="" loading="lazy" /></a>
+      <div class="hi-footer__bottom">
+        <span>© <span id="vora-year">2026</span> VORA</span>
+        <span data-i18n="footerTagline">SOLUÇÕES CRIATIVAS PARA O SEU NEGÓCIO.</span>
+      </div>
+    </footer>
+
+    <noscript>
+      <style>
+        .loader { display: none; }
+        .site-shell { opacity: 1; visibility: visible; }
+        .site-header { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+      </style>
+    </noscript>
+  </body>
+</html>
