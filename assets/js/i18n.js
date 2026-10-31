@@ -125,7 +125,7 @@
       contactMessagePlaceholder: 'Pode começar com uma ideia, um desafio ou algo que você queira melhorar.',
       contactMessageError: 'Escreva pelo menos 10 caracteres.',
       contactSubmit: 'INICIAR CONVERSA',
-      contactPrivacy: 'Seus dados serão usados apenas para responder à sua solicitação.',
+
       contactCopy: 'COPIAR MENSAGEM',
     },
     'en-US': {
@@ -247,7 +247,7 @@
       contactMessagePlaceholder: 'Start with an idea, a challenge, or something you would like to improve.',
       contactMessageError: 'Please enter at least 10 characters.',
       contactSubmit: 'START A CONVERSATION',
-      contactPrivacy: 'Your details will only be used to respond to your enquiry.',
+
       contactCopy: 'COPY MESSAGE',
     }
   };

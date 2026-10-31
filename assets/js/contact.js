@@ -1,18 +1,20 @@
-/* VORA | ETAPA 06 / FORMULÁRIO DE CONTATO
- * Configure um número comercial antes de publicar.
- * Exemplo: "5571999999999" (código do país + DDD + número, sem símbolos).
- * NÃO copie o número existente no projeto de referência Commit Labs.
+/* VORA | Formulário -> Apps Script -> Google Sheets -> WhatsApp.
+ * POST no-cors + consulta de protocolo em modo leitura (JSONP).
+ * O WhatsApp só é liberado depois de confirmar o protocolo no Sheets.
  */
 (() => {
   'use strict';
 
-  const VORA_WHATSAPP_NUMBER = ''; // PREENCHER COM O NÚMERO OFICIAL DA VORA
+  const VORA_WHATSAPP_NUMBER = '5571982564207';
+  const VORA_CONTACT_API_URL = 'https://script.google.com/macros/s/AKfycbziZcMPeEicHUvwplrTqxWINTWV421-rjxqi7NOsBAJ9SeT0kSK1Sntq1U2uyKEQQX_/exec';
   const form = document.getElementById('vora-contact-form');
   if (!form) return;
-  const fallback = document.getElementById('vora-contact-fallback');
-  const fallbackMessage = document.getElementById('vora-contact-fallback-message');
-  const copyButton = document.getElementById('vora-contact-copy');
-  let lastMessage = '';
+  const errorMessage = document.getElementById('vora-contact-error');
+  const submitButton = form.querySelector('.project-form__submit');
+  const submitText = form.querySelector('.project-form__submit-text');
+  let lastSubmissionId = '';
+  let saving = false;
+  let stored = false;
   const projectTypeSelect = document.getElementById('contact-project-type');
   const solutionField = document.getElementById('vora-solution-field');
   const solutionSelect = document.getElementById('contact-vora-solution');
@@ -159,69 +161,202 @@
     form.querySelector('.project-form__field.is-invalid input, .project-form__field.is-invalid select, .project-form__field.is-invalid textarea')?.focus();
     return false;
   }
-  function message() {
-    const selected = form.elements.namedItem('projectType');
-    const type = selected instanceof HTMLSelectElement ? selected.selectedOptions[0]?.textContent?.trim() : '';
-    const company = value('company') || tr('Não informado', 'Not provided');
-    const solution = value('projectType') === 'vora-solution'
-      ? solutionSelect.selectedOptions[0]?.textContent?.trim() || ''
+  // O registro completo segue para o Sheets. O WhatsApp recebe somente um resumo.
+  function choiceLabel(name) {
+    const select = form.elements.namedItem(name);
+    return select instanceof HTMLSelectElement
+      ? select.selectedOptions[0]?.textContent?.trim() || ''
       : '';
-    const solutionLine = solution ? tr(`\nSolução: ${solution}`, `\nSolution: ${solution}`) : '';
+  }
+
+  function generateSubmissionId() {
+    if (window.crypto?.randomUUID) return `vora-${window.crypto.randomUUID()}`;
+    const bytes = new Uint8Array(16);
+    window.crypto.getRandomValues(bytes);
+    return `vora-${Array.from(bytes, value => value.toString(16).padStart(2, '0')).join('')}`;
+  }
+
+  function payload() {
+    if (!lastSubmissionId) lastSubmissionId = generateSubmissionId();
+    const chosenType = value('projectType');
+    return {
+      id: lastSubmissionId,
+      name: value('name'),
+      company: value('company'),
+      whatsapp: value('whatsapp'),
+      email: value('email'),
+      projectType: chosenType,
+      projectTypeLabel: choiceLabel('projectType'),
+      voraSolution: chosenType === 'vora-solution' ? value('voraSolution') : '',
+      voraSolutionLabel: chosenType === 'vora-solution' ? choiceLabel('voraSolution') : '',
+      message: value('message'),
+      language: document.documentElement.lang || 'pt-BR',
+      page: `${window.location.origin}${window.location.pathname}`,
+      website: value('website') // Honeypot anti-spam (campo invisível).
+    };
+  }
+
+  // Uma mensagem autoexplicativa: o atendimento funciona mesmo sem consultar a planilha.
+  // O ID permanece interno, apenas para verificar gravação/evitar duplicidade.
+  function whatsappMessage() {
+    const name = value('name');
+    const company = value('company');
+    const type = choiceLabel('projectType');
+    const solution = value('projectType') === 'vora-solution' ? choiceLabel('voraSolution') : '';
+    const challenge = value('message');
     return tr(
-      `Olá, VORA!\n\nMeu nome é ${value('name')}.\nEmpresa / projeto: ${company}\nWhatsApp: ${value('whatsapp')}\nE-mail: ${value('email')}\nInteresse: ${type}${solutionLine}\n\nSobre a necessidade:\n${value('message')}`,
-      `Hello, VORA!\n\nMy name is ${value('name')}.\nCompany / project: ${company}\nWhatsApp: ${value('whatsapp')}\nEmail: ${value('email')}\nInterested in: ${type}${solutionLine}\n\nAbout your needs:\n${value('message')}`
+      `Olá, equipe VORA! Sou ${name} e gostaria de conversar sobre meu projeto.\n\n` +
+      `*Interesse:* ${type}\n` +
+      (solution ? `*Solução:* ${solution}\n` : '') +
+      (company ? `*Empresa/projeto:* ${company}\n` : '') +
+      `*WhatsApp:* ${value('whatsapp')}\n` +
+      `*E-mail:* ${value('email')}\n\n` +
+      `*O que preciso:*\n${challenge}\n\n` +
+      `Podemos conversar sobre os próximos passos?`,
+      `Hello, VORA team! I'm ${name}, and I'd like to discuss my project.\n\n` +
+      `*I'm interested in:* ${type}\n` +
+      (solution ? `*Solution:* ${solution}\n` : '') +
+      (company ? `*Company/project:* ${company}\n` : '') +
+      `*WhatsApp:* ${value('whatsapp')}\n` +
+      `*Email:* ${value('email')}\n\n` +
+      `*What I'm looking for:*\n${challenge}\n\n` +
+      `Could we talk about the next steps?`
     );
   }
+
+  function showError(message = '') {
+    errorMessage.textContent = message;
+    errorMessage.hidden = !message;
+  }
+
+  function resetResult() {
+    if (saving) return;
+    stored = false;
+    lastSubmissionId = '';
+    showError();
+  }
+
+  function openWhatsapp() {
+    // Navegação na aba atual funciona após o processamento assíncrono,
+    // sem pop-up nem necessidade de um segundo clique.
+    const url = `https://wa.me/${VORA_WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage())}`;
+    window.location.assign(url);
+  }
+
+  function setSaving(active) {
+    saving = active;
+    submitButton.disabled = active;
+    form.setAttribute('aria-busy', String(active));
+    submitText.textContent = active
+      ? tr('INICIANDO...', 'STARTING...')
+      : tr('INICIAR CONVERSA', 'START A CONVERSATION');
+  }
+
+  document.addEventListener('vora:languagechange', () => {
+    setSaving(saving);
+    if (!errorMessage.hidden) showError(tr(
+      'Não conseguimos iniciar a conversa agora. Tente novamente em instantes.',
+      'We couldn’t start the conversation right now. Please try again in a moment.'
+    ));
+  });
+
   form.addEventListener('input', event => {
     const element = event.target;
     if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement || element instanceof HTMLSelectElement) {
       if (element.name) mark(element.name, false);
+      resetResult();
     }
   });
   form.addEventListener('change', event => {
     const element = event.target;
     if (element instanceof HTMLSelectElement && element.name) mark(element.name, false);
+    resetResult();
   });
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    fallback.hidden = true;
-    if (!validate()) return;
-    lastMessage = message();
 
-    const number = VORA_WHATSAPP_NUMBER.replace(/\D/g, '');
-    if (!number || number.length < 11) {
-      fallbackMessage.textContent = tr(
-        'O canal de atendimento da VORA ainda não foi configurado neste site. Sua mensagem não foi enviada. Você pode copiá-la para guardar os dados.',
-        'VORA’s contact channel has not been configured on this site yet. Your message was not sent. You can copy it to keep the details.'
-      );
-      fallback.hidden = false;
+  // O navegador não pode ler diretamente a resposta do POST do Apps Script por CORS.
+  // Portanto, o envio é no-cors e a confirmação é uma consulta SOMENTE-LEITURA
+  // por protocolo aleatório. O Apps Script não retorna dados pessoais no status.
+  function queryRecordStatus(id) {
+    return new Promise(resolve => {
+      const random = new Uint8Array(12);
+      window.crypto.getRandomValues(random);
+      const callback = '__voraStatus_' + Array.from(random, n => n.toString(16).padStart(2, '0')).join('');
+      const script = document.createElement('script');
+      let settled = false;
+      let timeout;
+      const done = result => {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeout);
+        script.remove();
+        delete window[callback];
+        resolve(result);
+      };
+      window[callback] = result => done(result);
+      script.onerror = () => done(null);
+      const query = new URLSearchParams({ action: 'status', id, callback, _: String(Date.now()) });
+      script.src = `${VORA_CONTACT_API_URL}?${query}`;
+      script.async = true;
+      script.referrerPolicy = 'no-referrer';
+      timeout = window.setTimeout(() => done(null), 6500);
+      document.head.appendChild(script);
+    });
+  }
+
+  async function checkSheetConfirmation(id) {
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const response = await queryRecordStatus(id);
+      if (response?.ok === true && response?.id === id && response?.found === true) return true;
+      if (attempt < 4) await new Promise(resolve => window.setTimeout(resolve, 1500));
+    }
+    return false;
+  }
+
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (saving) return;
+    if (stored) {
+      openWhatsapp();
       return;
     }
+    if (!validate()) return;
 
-    const destination = `https://wa.me/${number}?text=${encodeURIComponent(lastMessage)}`;
-    const popup = window.open(destination, '_blank');
-    if (popup) { try { popup.opener = null; } catch {} }
-    // O WhatsApp será aberto para confirmação manual pelo visitante;
-    // abrir a aba não significa que a mensagem foi enviada.
-    if (!popup) {
-      fallbackMessage.textContent = tr(
-        'Não foi possível abrir o WhatsApp. Copie a mensagem ou tente novamente. Nada foi enviado.',
-        'We could not open WhatsApp. Copy the message or try again. Nothing has been sent.'
-      );
-      fallback.hidden = false;
-    }
-  });
-  copyButton?.addEventListener('click', async () => {
-    if (!lastMessage) return;
+    const data = payload();
+    setSaving(true);
+    showError();
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
     try {
-      await navigator.clipboard.writeText(lastMessage);
-    } catch {
-      const field = document.createElement('textarea');
-      field.value = lastMessage; field.style.position = 'fixed'; field.style.opacity = '0';
-      document.body.appendChild(field); field.select();
-      try { document.execCommand('copy'); } finally { field.remove(); }
+      // O POST não expõe a resposta em navegadores comuns (CORS).
+      // O Apps Script confirma a gravação por uma consulta somente-leitura.
+      try {
+        await fetch(VORA_CONTACT_API_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data),
+          signal: controller.signal,
+          cache: 'no-store'
+        });
+      } catch (error) {
+        console.warn('VORA: envio sem resposta; conferindo o registro.', error);
+      }
+      const confirmed = await checkSheetConfirmation(data.id);
+      if (!confirmed) throw new Error('Registro não confirmado');
+
+      stored = true;
+      openWhatsapp();
+    } catch (error) {
+      console.warn('VORA: não foi possível confirmar a solicitação:', error);
+      // O mesmo ID interno será usado na próxima tentativa; evita duplicação.
+      showError(tr(
+        'Não conseguimos iniciar a conversa agora. Tente novamente em instantes.',
+        'We couldn’t start the conversation right now. Please try again in a moment.'
+      ));
+    } finally {
+      window.clearTimeout(timeout);
+      setSaving(false);
     }
-    copyButton.textContent = tr('COPIADO', 'COPIED');
-    window.setTimeout(() => { copyButton.textContent = tr('COPIAR MENSAGEM', 'COPY MESSAGE'); }, 1500);
   });
+
 })();

@@ -315,6 +315,10 @@
           </div>
 
           <form class="project-form" id="vora-contact-form" novalidate>
+            <div class="project-form__honeypot" aria-hidden="true">
+              <label for="contact-website">Deixe este campo vazio</label>
+              <input id="contact-website" type="text" name="website" tabindex="-1" autocomplete="off" />
+            </div>
             <div class="project-form__field" data-field="name">
               <label for="contact-name" class="project-form__label"><b>01</b><span data-i18n="contactNameLabel">SEU NOME *</span></label>
               <input id="contact-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="100" required placeholder="Como podemos chamar você?" data-i18n-placeholder="contactNamePlaceholder" aria-describedby="contact-name-error" />
@@ -376,11 +380,7 @@
                 <span class="project-form__submit-text" data-i18n="contactSubmit">INICIAR CONVERSA</span>
                 <span class="project-form__submit-arrow cta-arrow" aria-hidden="true"><svg class="cta-arrow__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M5 19 19 5M8 5h11v11"/></svg></span>
               </button>
-              <p class="project-form__note" data-i18n="contactPrivacy">Seus dados serão usados apenas para responder à sua solicitação.</p>
-              <div class="project-form__fallback" id="vora-contact-fallback" role="status" aria-live="polite" hidden>
-                <p id="vora-contact-fallback-message"></p>
-                <button type="button" id="vora-contact-copy" data-i18n="contactCopy">COPIAR MENSAGEM</button>
-              </div>
+              <p class="project-form__submit-error" id="vora-contact-error" role="alert" aria-live="polite" hidden></p>
             </div>
           </form>
         </div>
