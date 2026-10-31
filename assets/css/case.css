@@ -140,3 +140,27 @@ body::-webkit-scrollbar { display: none; width: 0; height: 0; }
 /* Cards de "Outros projetos" adotam o mesmo enquadramento quadrado
    das capas da galeria da página inicial. */
 .case-related__preview { aspect-ratio: 1 / 1; }
+
+
+/* Case Automação de Cadastros — vídeo responsivo com enquadramento integral.
+   Mantém os controles nativos e a proporção original (16:9) em qualquer tela. */
+.case-visuals__grid--video {
+  grid-template-columns: minmax(0, 1fr);
+  width: min(100%, 1120px);
+  margin-inline: auto;
+}
+.case-visuals__item--video {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  background: #0e0f28;
+}
+.case-visuals__screen-video {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #0e0f28;
+}
