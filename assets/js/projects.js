@@ -26,8 +26,10 @@
     { name: 'Aphrodite Sex Shop', categories: ['commerce'], kind: 'site', url: 'https://aphroditesex-shop.netlify.app/', image: 'sex-shop2.png' },
     { name: 'Automação de Cadastros', categories: ['automations'], kind: 'case', url: 'cases/automacao-cadastros.html', image: 'automacao-cadastros.png' },
     { name: 'ConciliaPy', categories: ['systems', 'automations'], kind: 'case', url: 'cases/conciliapy.html', image: 'conciliapy.png' },
-    { name: 'Agência Modelo', categories: ['sites'], kind: 'site', url: 'https://studiovoralabs.github.io/agencia-modelo/', image: 'agencia-modelo.png' }
+    { name: 'Agência Modelo', categories: ['sites'], kind: 'site', url: 'https://studiovoralabs.github.io/agencia-modelo/', image: 'agencia-modelo.png' }, 
+    { name: 'ClimaNova', categories: ['sites'], kind: 'site', url: 'https://studiovoralabs.github.io/vora-ar/', image: 'climanova.png' }
   ];
+
   const cards = Array.from(ring.querySelectorAll('.img'));
   const filters = Array.from(section.querySelectorAll('[data-project-filter]'));
   if (cards.length !== projects.length) return;
