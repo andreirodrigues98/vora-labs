@@ -27,7 +27,7 @@
     { name: 'Automação de Cadastros', categories: ['automations'], kind: 'case', url: 'cases/automacao-cadastros.html', image: 'automacao-cadastros.png' },
     { name: 'ConciliaPy', categories: ['systems', 'automations'], kind: 'case', url: 'cases/conciliapy.html', image: 'conciliapy.png' },
     { name: 'Agência Modelo', categories: ['sites'], kind: 'site', url: 'https://studiovoralabs.github.io/agencia-modelo/', image: 'agencia-modelo.png' }, 
-    { name: 'ClimaNova', categories: ['sites'], kind: 'site', url: 'https://studiovoralabs.github.io/vora-ar/', image: 'climanova.png' }
+    { name: 'ClimaNova', categories: ['sites'], kind: 'site', url: 'https://clima-nova.netlify.app/', image: 'climanova.png' }
   ];
 
   const cards = Array.from(ring.querySelectorAll('.img'));
