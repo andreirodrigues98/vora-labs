@@ -23,5 +23,16 @@ window.VORA_PROJECTS = Object.freeze([
     id: 'rodapay', name: 'RodaPay', category: { 'pt-BR': 'Produto digital', 'en-US': 'Digital product' },
     cover: 'assets/images/projects/rodapay.webp',
     type: 'case', url: 'cases/rodapay.html'
-  }
+  }, 
+  {
+  id: 'kayllane-doula',
+  name: 'Kayllane Ashley — Doula',
+  category: {
+    'pt-BR': 'Presença digital e acolhimento',
+    'en-US': 'Digital presence & care'
+  },
+  cover: 'assets/images/projects/kayllane-doula.png',
+  type: 'external',
+  url: 'https://kayllaneashleydoula.netlify.app/'
+},
 ]);

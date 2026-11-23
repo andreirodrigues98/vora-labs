@@ -28,7 +28,8 @@
     { name: 'ConciliaPy', categories: ['systems', 'automations'], kind: 'case', url: 'cases/conciliapy.html', image: 'conciliapy.png' },
     { name: 'Agência Modelo', categories: ['sites'], kind: 'site', url: 'https://studiovoralabs.github.io/agencia-modelo/', image: 'agencia-modelo.png' }, 
     { name: 'ClimaNova', categories: ['sites'], kind: 'site', url: 'https://clima-nova.netlify.app/', image: 'climanova.png' }, 
-    { name: 'OFFFRAME', categories: ['sites'], kind: 'site', url: 'https://vora-offframe.netlify.app/', image: 'offframe.png' }
+    { name: 'OFFFRAME', categories: ['sites'], kind: 'site', url: 'https://vora-offframe.netlify.app/', image: 'offframe.png' }, 
+    { name: 'Kayllane Ashley — Doula', categories: ['sites'], kind: 'site', url: 'https://kayllaneashleydoula.netlify.app/', image: 'kayllane-doula.png'},
   ];
 
   const cards = Array.from(ring.querySelectorAll('.img'));
