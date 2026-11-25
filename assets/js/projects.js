@@ -1,7 +1,7 @@
 /* VORA · Work — galeria panorâmica em White Blue.
    Valores da referência: perspectiva 2000px, origem Z 500px,
    profundidade -500px e passo angular de 36°.
-   Dez projetos, dez painéis. Cada filtro mostra somente os projetos da
+   Cada filtro mostra somente os projetos da
    categoria correspondente, sem duplicar trabalhos na galeria. */
 (() => {
   'use strict';
@@ -16,21 +16,8 @@
 
   // Cada trabalho aparece uma única vez. As categorias correspondem
   // aos trabalhos reais selecionados para o portfólio da VORA.
-  const projects = [
-    { name: 'OnTable', categories: ['systems'], kind: 'case', url: 'cases/ontable.html', image: 'ontable_work1.png' },
-    { name: 'Controly', categories: ['systems'], kind: 'case', url: 'cases/controly.html', image: 'controly.png' },
-    { name: 'RodaPay', categories: ['systems'], kind: 'case', url: 'cases/rodapay.html', image: 'rodapay.png' },
-    { name: 'Dudôce', categories: ['commerce'], kind: 'site', url: 'https://dudoce.netlify.app/', image: 'dudoce.png' },
-    { name: 'Alagim Jagun', categories: ['sites'], kind: 'site', url: 'https://sacerdotealagim.github.io/allanmoraes/', image: 'alagim-jagun.png' },
-    { name: 'Ateliê Azul Virgem', categories: ['commerce'], kind: 'site', url: 'https://andreirodrigues98.github.io/azulvirgem/', image: 'azul-virgem.png' },
-    { name: 'Aphrodite Sex Shop', categories: ['commerce'], kind: 'site', url: 'https://aphroditesex-shop.netlify.app/', image: 'sex-shop2.png' },
-    { name: 'Automação de Cadastros', categories: ['automations'], kind: 'case', url: 'cases/automacao-cadastros.html', image: 'automacao-cadastros.png' },
-    { name: 'ConciliaPy', categories: ['systems', 'automations'], kind: 'case', url: 'cases/conciliapy.html', image: 'conciliapy.png' },
-    { name: 'Agência Modelo', categories: ['sites'], kind: 'site', url: 'https://studiovoralabs.github.io/agencia-modelo/', image: 'agencia-modelo.png' }, 
-    { name: 'ClimaNova', categories: ['sites'], kind: 'site', url: 'https://clima-nova.netlify.app/', image: 'climanova.png' }, 
-    { name: 'OFFFRAME', categories: ['sites'], kind: 'site', url: 'https://vora-offframe.netlify.app/', image: 'offframe.png' }, 
-    { name: 'Kayllane Ashley — Doula', categories: ['sites'], kind: 'site', url: 'https://kayllaneashleydoula.netlify.app/', image: 'kayllane-doula.png'},
-  ];
+  const projects = window.VORA_PROJECTS;
+  if (!Array.isArray(projects) || !projects.length) return;
 
   const cards = Array.from(ring.querySelectorAll('.img'));
   const filters = Array.from(section.querySelectorAll('[data-project-filter]'));
@@ -47,6 +34,7 @@
   let lastX = 0;
   let pointerId = null;
   let frame = 0;
+  let snapFrame = 0;
 
   function shortestOffset(i) {
     let offset = i - position;
@@ -92,17 +80,14 @@
       }
       const offset = shortestOffset(i);
       const distance = Math.abs(offset);
-      const degrees = 180 - offset * STEP;
-      // O deslocamento Z e o ponto de origem replicam a construção original.
-      card.style.transform = `translateZ(-500px) rotateY(${degrees.toFixed(3)}deg)`;
+      const degrees = -offset * STEP;
+      // Mesma geometria do anel, sem duas rotações de 180° redundantes.
+      // No centro, o PNG é renderizado sem transformação no cartão.
+      card.style.transform = distance < .0001 ? 'none' : `rotateY(${degrees.toFixed(3)}deg)`;
       // As bordas do quarto painel se apagam antes do seu retorno ao outro lado.
       const opacity = Math.max(0, Math.min(1, (2.03 - distance) / .43));
       card.style.opacity = opacity.toFixed(3);
       card.style.visibility = opacity < .002 ? 'hidden' : 'visible';
-      // Os mockups da VORA são verticais; deslocamentos de 400px apagariam
-      // a imagem, ao contrário das fotos horizontais de 700px da demo.
-      // Preserva o parallax em proporção ao enquadramento disponível.
-      card.style.backgroundPosition = `${(50 + offset * 8).toFixed(1)}% 50%`;
       if (distance < nearestDistance) {
         nearestDistance = distance;
         nearestIndex = i;
@@ -118,13 +103,17 @@
       : projects.filter(project => project.categories.includes(category));
     if (!visibleProjects.length) return;
 
+    cancelSnap();
     position = 0;
     selected = -1;
     cards.forEach((card, i) => {
       const project = visibleProjects[i];
-      card.style.backgroundImage = project
-        ? `url("assets/images/projects/${project.image}")`
-        : 'none';
+      if (project) {
+        const src = `assets/images/projects/${project.image}?v=png1`;
+        if (card.getAttribute('src') !== src) card.src = src;
+      } else {
+        card.removeAttribute('src');
+      }
     });
     stage.classList.toggle('is-single-project', visibleProjects.length === 1);
     filters.forEach(button => {
@@ -146,8 +135,37 @@
     position -= dx / (STEP * DRAG_PER_DEGREE);
     requestPaint();
   }
-  function begin() { dragging = true; stage.classList.add('is-dragging'); }
-  function end() { dragging = false; stage.classList.remove('is-dragging'); }
+  function cancelSnap() {
+    if (snapFrame) cancelAnimationFrame(snapFrame);
+    snapFrame = 0;
+  }
+  // Ao soltar, alinha o cartão mais próximo na posição frontal.
+  function snapToNearest() {
+    cancelSnap();
+    const from = position;
+    const to = Math.round(from);
+    if (reducedMotion || Math.abs(from - to) < .0001) {
+      position = to;
+      requestPaint();
+      return;
+    }
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min(1, (now - start) / 220);
+      position = from + (to - from) * (1 - Math.pow(1 - t, 3));
+      if (t === 1) position = to;
+      requestPaint();
+      snapFrame = t < 1 ? requestAnimationFrame(tick) : 0;
+    }
+    snapFrame = requestAnimationFrame(tick);
+  }
+  function begin() { cancelSnap(); dragging = true; stage.classList.add('is-dragging'); }
+  function end() {
+    if (!dragging) return;
+    dragging = false;
+    stage.classList.remove('is-dragging');
+    snapToNearest();
+  }
   // A referência usa GSAP Draggable. Ele assume o arraste quando carregado;
   // Pointer Events mantém o mesmo gesto funcionando quando o CDN está indisponível.
   if (window.gsap && window.Draggable) {
@@ -184,7 +202,8 @@
   stage.addEventListener('keydown', event => {
     if (!['ArrowLeft','ArrowRight'].includes(event.key) || visibleProjects.length < 2) return;
     event.preventDefault();
-    position += event.key === 'ArrowRight' ? 1 : -1;
+    cancelSnap();
+    position = Math.round(position) + (event.key === 'ArrowRight' ? 1 : -1);
     requestPaint();
   });
   document.addEventListener('vora:languagechange', () => {

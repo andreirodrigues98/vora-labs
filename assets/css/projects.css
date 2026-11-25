@@ -59,24 +59,24 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
   user-select: none;
   -webkit-user-select: none;
   pointer-events: none;
 }
 .projects #ring {
-  /* Rotação inicial original e enquadramento frontal do anel. */
-  transform: translateZ(500px) rotateY(180deg);
+  /* Anel sem rotação redundante; a geometria fica nos cartões. */
+  transform-style: preserve-3d;
 }
 .projects .img {
-  background-size: 115% auto;
-  background-repeat: no-repeat;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  image-rendering: auto;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform-origin: 50% 50% 500px;
-  will-change: transform, opacity;
 }
-/* Vinheta original: suaviza as duas pontas sem escurecer o centro. */
+/* Vinheta suave nas extremidades, preservando a leitura dos cartões. */
 .projects .vignette {
   position: absolute;
   z-index: 2;
@@ -86,7 +86,7 @@
   height: 100%;
   transform: translateX(-50%);
   background: linear-gradient(to left,
-    #000000 12%, rgba(0,0,0,0) 40%, rgba(0,0,0,0) 60%, #000000 88%);
+    #000000 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, #000000 100%);
   pointer-events: none;
 }
 .projects #dragger {
@@ -162,7 +162,7 @@ body.is-on-projects .language__separator { color: #777D9A; }
   .projects__heading { top: max(110px, 14vh); font-size: 31px; }
   .projects .container { top: 49%; transform: translate(-50%, -50%) scale(.84); }
   .projects__caption { bottom: clamp(52px, 8vh, 76px); }
-  .projects .vignette { width: 110vw; background: linear-gradient(to right, #000000 0%, transparent 18%, transparent 82%, #000000 100%); }
+  .projects .vignette { width: 110vw; background: linear-gradient(to right, #000000 0%, transparent 12%, transparent 88%, #000000 100%); }
   .site-header.is-on-projects .site-header__toggle { color:#0E0F28; background:#E4E5F2; }
   body.menu-is-open .site-header.is-on-projects { background:transparent; backdrop-filter:none; }
   body.menu-is-open .site-header.is-on-projects .site-header__logo { color:#E4E5F2; }
